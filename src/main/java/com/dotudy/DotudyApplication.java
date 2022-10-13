@@ -1,4 +1,4 @@
-package com.toyproject.dotudy;
+package com.dotudy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
