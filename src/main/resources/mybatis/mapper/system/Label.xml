@@ -8,6 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 라벨 코드 조회 -->
 	<select id="selectLabelCode" resultType="com.dotudy.system.model.Label">
 	<![CDATA[
+		/* com.dotudy.system.model.Label.selectLabelCode */
 		select * from label_code;
 	]]>
 	</select>	

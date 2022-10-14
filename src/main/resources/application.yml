@@ -1,0 +1,31 @@
+server:
+  servlet:
+    context-path: /dotudy
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+    
+spring:
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://13.125.173.103:52904/dotudy?useSSL=false&amp&serverTimezone=UTC
+    username: admin
+    password: admin
+      
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: update
+      
+mybatis:
+  mapper-locations: classpath*:mybatis/mapper/**/*.xml
+  type-aliases-package: com.dotudy.**.model
+  configuration:
+    map-underscore-to-camel-case: true # 쿼리컬럼 alias로 as camelcase 필드명으로 하지 않아도 자동으로 잡아줌
+    jdbc-type-for-null: 'NULL' # 파라미터 널 가능
+    call-setters-on-nulls: true # resultType hashmap일 경우 null필드 누락되지 않도록 해줌.
+

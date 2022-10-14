@@ -1,5 +1,7 @@
 package com.dotudy.system.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ public class LabelServiceImpl implements LabelService {
 	LabelRepository labelRepository;
 	
 	@Override
-	public Label selectLabelCode(){
+	public List<Label> selectLabelCode(){
 		return labelRepository.selectLabelCode();
 	}
 }

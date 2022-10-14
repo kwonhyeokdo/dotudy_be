@@ -1,5 +1,7 @@
 package com.dotudy.system.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,8 @@ public class LabelController {
 	LabelService labelService;
 	
 	@GetMapping("/system/labels")
-	public Label selectLabel(HttpServletRequest request) {
-		Label label = labelService.selectLabelCode();
-		return label;
+	public List<Label> selectLabel(HttpServletRequest request) {
+		List<Label> labelList = labelService.selectLabelCode();
+		return labelList;
 	}
 }
