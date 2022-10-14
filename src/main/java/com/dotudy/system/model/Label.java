@@ -8,6 +8,8 @@ import lombok.ToString;
 @Data
 @ToString
 public class Label {
+	// LabelCode
+	private String labelUid; // FE -> Grid ID용
 	private String labelCode;
 	
 	// 공통
