@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.dotudy.system.message.repository.MessageRepository">
+
+	<!-- 다국어 메시지 조회 -->
+	<select id="selectMessages"
+			parameterType="com.dotudy.business.system.label.model.Label"
+			resultType="com.dotudy.business.system.label.model.Label">
+	<![CDATA[
+	/* com.dotudy.system.message.repository.MessageRepository.selectMessages */
+			SELECT ln2.language_code AS languageCode
+				 , lc.label_code AS labelCode
+				 , ln2.label_name AS labelName
+			  FROM label_code lc
+		INNER JOIN label_name ln2
+				ON lc.label_id = ln2.label_id
+			   AND ln2.expire_date_time = '9999-12-31 23:59:59'
+			 WHERE 1=1
+			   AND lc.expire_date_time = '9999-12-31 23:59:59'
+	]]>
+	<if test="languageCode != null and !languageCode.equals('')">
+	<![CDATA[
+			   AND ln2.language_code = #{languageCode}
+	]]>
+	</if>
+	<![CDATA[
+			 ORDER BY languageCode
+	]]>
+	</select>
+	
+</mapper>

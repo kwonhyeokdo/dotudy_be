@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.dotudy.business.system.label.repository.LabelRepository">
+	<select 
+		id="selectLabelCodeByLabelCodeAndLabelName"
+		parameterType="string"
+		resultType="com.dotudy.business.system.label.model.Label"
+	>
+		<![CDATA[
+			/* com.dotudy.business.system.label.repository.LabelRepository.selectLabelCodeByLabelCodeAndLabelName */
+			   	SELECT lc.label_id			AS labelId
+					 , lc.expire_date_time 	AS expireDateTime
+					 , lc.label_code 		AS labelCode
+				     , 'normal' 			AS status
+				     , lc.create_user_id 	AS createUserId
+				     , lc.create_module_id 	AS createModuleId
+				     , lc.create_date_time 	AS createDateTime
+				     , lc.modify_user_id 	AS modifyUserId
+				     , lc.modify_module_id 	AS modifyModuleId
+				     , lc.modify_date_time 	AS modifyDateTime
+				  FROM label_code lc
+			INNER JOIN label_name ln2
+					ON lc.label_id = ln2.label_id
+				   AND ln2.expire_date_time = '${expireDateTime}'
+				 WHERE 1=1
+				   AND lc.expire_date_time = '${expireDateTime}'
+				   AND UPPER(lc.label_code) LIKE CONCAT('%', UPPER(#{labelCode}), '%')
+				   AND UPPER(ln2.label_name) LIKE CONCAT('%', UPPER(#{labelName}), '%')
+		]]>
+	</select>
+	
+	<select 
+		id="selectLabelCodeByLabelCode"
+		parameterType="string"
+		resultType="com.dotudy.business.system.label.model.Label"
+	>
+		<![CDATA[
+			/* com.dotudy.business.system.label.repository.LabelRepository.selectLabelCodeByLabelCode */
+			SELECT lc.label_id			AS labelId
+				 , lc.expire_date_time 	AS expireDateTime
+				 , lc.label_code 		AS labelCode
+			     , 'normal' 			AS status
+			     , lc.create_user_id 	AS createUserId
+			     , lc.create_module_id 	AS createModuleId
+			     , lc.create_date_time 	AS createDateTime
+			     , lc.modify_user_id 	AS modifyUserId
+			     , lc.modify_module_id 	AS modifyModuleId
+			     , lc.modify_date_time 	AS modifyDateTime
+			  FROM label_code lc
+			 WHERE 1=1
+			   AND lc.expire_date_time = '${expireDateTime}'
+			   AND UPPER(lc.label_code) LIKE CONCAT('%', UPPER(#{labelCode}), '%')
+		]]>
+	</select>
+	
+	<select 
+		id="selectLabelCodeByLabelName"
+		parameterType="string"
+		resultType="com.dotudy.business.system.label.model.Label"
+	>
+		<![CDATA[
+			/* com.dotudy.business.system.label.repository.LabelRepository.selectLabelCodeByLabelName */
+				SELECT lc.label_id			AS labelId
+					 , lc.expire_date_time 	AS expireDateTime
+					 , lc.label_code 		AS labelCode
+				     , 'normal' 			AS status
+				     , lc.create_user_id 	AS createUserId
+				     , lc.create_module_id 	AS createModuleId
+				     , lc.create_date_time 	AS createDateTime
+				     , lc.modify_user_id 	AS modifyUserId
+				     , lc.modify_module_id 	AS modifyModuleId
+				     , lc.modify_date_time 	AS modifyDateTime
+				  FROM label_code lc
+			INNER JOIN label_name ln2
+				    ON lc.label_id = ln2.label_id
+				   AND lc.expire_date_time = '${expireDateTime}'
+				 WHERE 1=1
+				   AND lc.expire_date_time = '${expireDateTime}'
+				   AND UPPER(ln2.label_name) LIKE CONCAT('%', UPPER(#{labelName}), '%')
+		]]>
+	</select>
+	
+	<select 
+		id="selectAllLabelCode"
+		parameterType="string"
+		resultType="com.dotudy.business.system.label.model.Label"
+	>
+		<![CDATA[
+			/* com.dotudy.business.system.label.repository.LabelRepository.selectAllLabelCode */
+		   	SELECT lc.label_id			AS labelId
+				 , lc.expire_date_time 	AS expireDateTime
+				 , lc.label_code 		AS labelCode
+			     , 'normal' 			AS status
+			     , lc.create_user_id 	AS createUserId
+			     , lc.create_module_id 	AS createModuleId
+			     , lc.create_date_time 	AS createDateTime
+			     , lc.modify_user_id 	AS modifyUserId
+			     , lc.modify_module_id 	AS modifyModuleId
+			     , lc.modify_date_time 	AS modifyDateTime
+			  FROM label_code lc
+			 WHERE 1=1
+			   AND lc.expire_date_time = '${expireDateTime}'
+		]]>
+	</select>
+	
+	<select 
+		id="selectLabelNameByLabelId"
+		parameterType="string"
+		resultType="com.dotudy.business.system.label.model.Label"
+	>
+		<![CDATA[
+			/* com.dotudy.business.system.label.repository.LabelRepository.selectLabelNameByLabelId */
+				SELECT #{labelId} 				AS labelId
+					 , (SELECT lc2.label_code
+					 	  FROM label_code lc2
+					 	 WHERE 1=1
+					 	   AND label_id = #{labelId}
+					 	   AND expire_date_time = '${expireDateTime}'
+					   ) AS labelCode
+					 , cckv.common_code_key 	AS languageCode
+					 , cckv.common_code_value 	AS language
+					 , la.label_name 			AS labelName
+			     	 , 'normal' 				AS status
+					 , la.create_user_id 		AS createUserId
+					 , la.create_module_id 		AS createModuleId
+					 , la.create_date_time 		AS createDateTime
+					 , la.modify_user_id 		AS modifyUserId
+					 , la.modify_module_id 		AS modifyModuleId
+					 , la.modify_date_time 		AS modifyDateTime
+				  FROM common_code_key_value cckv
+			INNER JOIN common_code cc
+				    ON cc.expire_date_time = '${expireDateTime}'
+				   AND cc.common_code = 'language'
+				   AND cckv.common_code_id = cc.common_code_id
+			 LEFT JOIN (
+					       SELECT lc.label_id
+								, lc.label_code
+								, ln2.language_code
+								, ln2.label_name
+								, ln2.create_user_id
+								, ln2.create_module_id
+								, ln2.create_date_time
+								, ln2.modify_user_id
+								, ln2.modify_module_id
+								, ln2.modify_date_time
+							 FROM label_name ln2
+					   INNER JOIN label_code lc
+							   ON lc.expire_date_time = '${expireDateTime}'
+							  AND lc.label_id = #{labelId}
+							  AND lc.label_id = ln2.label_id
+							WHERE 1=1
+							  AND lc.expire_date_time = '${expireDateTime}'
+					   )la
+					ON la.language_code = cckv.common_code_key
+				 WHERE 1=1
+				   AND cckv.expire_date_time = '${expireDateTime}'
+			  ORDER BY cckv.sequence
+		]]>
+	</select>
+	
+	<update
+		id="expireLabelCode"
+		parameterType="com.dotudy.business.system.label.model.Label"
+	>
+		<![CDATA[
+			/* com.dotudy.business.system.label.repository.LabelRepository.expireLabelCode */
+			UPDATE label_code
+			   SET expire_date_time = #{expireDateTime}
+			   	 , modify_user_id= #{modifyUserId}
+			   	 , modify_module_id= #{modifyUserId}
+			   	 , modify_date_time= #{modifyDateTime}
+			 WHERE 1=1
+			   AND label_id IN
+		]]>
+			<foreach collection="target" item="item" open="(" close=")" separator=",">
+		<![CDATA[		
+			   #{item.labelId}
+		]]>
+			</foreach>
+		<![CDATA[ 
+	 	   	   AND expire_date_time = '${expireDateTime}'
+			;
+		]]>
+	</update>
+	
+	<insert 
+		id="insertLabelCode"
+		parameterType="com.dotudy.business.system.label.model.Label"
+	>
+		<![CDATA[
+			/* com.dotudy.business.system.label.repository.LabelRepository.insertLabelCode */
+			INSERT INTO label_code(
+				 label_id
+				,expire_date_time
+				,label_code
+				,create_user_id
+				,create_module_id
+				,create_date_time
+				,modify_user_id
+				,modify_module_id
+				,modify_date_time
+			)
+			VALUES
+		]]>
+			<foreach collection="target" item="item" separator=",">
+			<![CDATA[
+			(
+				 #{item.labelId}
+				,#{expireDateTime}
+				,#{item.labelCode}
+			    ,#{createUserId}
+			    ,#{createModuleId}
+			    ,#{createDateTime}
+			    ,#{modifyUserId}
+			    ,#{modifyModuleId}
+			    ,#{modifyDateTime}
+			)
+			]]>
+			</foreach>
+		<![CDATA[
+			;
+		]]>
+	</insert>
+	
+	<update
+		id="expireLabelName"
+		parameterType="com.dotudy.business.system.label.model.Label"
+	>
+		<![CDATA[
+			/* com.dotudy.business.system.label.repository.LabelRepository.expireLabelName */
+			UPDATE label_name
+			   SET expire_date_time = #{expireDateTime}
+			   	 , modify_user_id= #{modifyUserId}
+			   	 , modify_module_id= #{modifyUserId}
+			   	 , modify_date_time= #{modifyDateTime}
+			 WHERE 1=1
+			   AND label_id IN
+		]]>
+			<foreach collection="target" item="item" open="(" close=")" separator=",">
+		<![CDATA[		
+			   #{item.labelId}
+		]]>
+			</foreach>
+		<![CDATA[ 
+	 	   	   AND expire_date_time = '${expireDateTime}'
+			;
+		]]>
+	</update>
+</mapper>

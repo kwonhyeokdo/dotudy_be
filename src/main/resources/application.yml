@@ -9,17 +9,19 @@ server:
 spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mysql://3.37.210.15:51465/dotudy?useSSL=false&amp&serverTimezone=UTC
+    url: jdbc:log4jdbc:mysql://3.35.214.192:51267/dotudy?useSSL=false&amp&serverTimezone=Asia/Seoul
     username: admin
     password: admin
-      
-  jpa:
-    properties:
-      hibernate:
-        format_sql: 'true'
-    show-sql: 'true'
-    hibernate:
-      ddl-auto: update
+#  jpa:
+#    properties:
+#      hibernate:
+#        format_sql: 'true'
+#    show-sql: 'true'
+#    hibernate:
+#      ddl-auto: update
+  config:
+    import: 
+      - classpath:/work.yml
       
 mybatis:
   mapper-locations: classpath*:mybatis/mapper/**/*.xml
@@ -28,4 +30,6 @@ mybatis:
     map-underscore-to-camel-case: true # 쿼리컬럼 alias로 as camelcase 필드명으로 하지 않아도 자동으로 잡아줌
     jdbc-type-for-null: 'NULL' # 파라미터 널 가능
     call-setters-on-nulls: true # resultType hashmap일 경우 null필드 누락되지 않도록 해줌.
+    variables:
+      expireDateTime: ${expire_date_time}
 

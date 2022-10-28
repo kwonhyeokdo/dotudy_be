@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.dotudy.system.util.repository.UtilRepository">
+
+	<!-- DB 기준 현재 시간 가져오기 -->
+	<select id="selectCurrentDateTime" resultType="string">
+	<![CDATA[
+	/* com.dotudy.system.util.repository.UtilRepository.selectCurrentDateTime */
+		SELECT NOW() AS CurrentTime;
+	]]>
+	</select>
+	
+</mapper>
